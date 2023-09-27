@@ -26,7 +26,6 @@ class ProductIndexRequest extends FormRequest
             'discount' => 'string',
             'argument' => 'string',
             'sortMode' => 'string',
-            'mode' => 'string',
             'category_id' => 'numeric|min:0'
         ];
     }

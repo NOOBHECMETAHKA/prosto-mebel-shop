@@ -14,12 +14,23 @@ class ProductController extends Controller
 {
     private function productSort($data){
         $products = Product::all();
+
+        //Сортировка
+        if(isset($data["argument"])){
+            if(isset($data['sortMode']))
+                $products = $products->sortBy($data['argument'])->reverse();
+            else
+                $products = $products->sortBy($data['argument']);
+        }
+
+        //Фильтрация с вкладки категории
         if(isset($data['category_id']))
             $products = $products->where('category_id', $data['category_id']);
 
         return $products;
     }
-    //Http work
+
+    //---------------------------------------Http work
     public function index(ProductIndexRequest $request){
         $data = $request->validated();
 

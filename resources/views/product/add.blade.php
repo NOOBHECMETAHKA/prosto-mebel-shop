@@ -4,7 +4,7 @@
     <div class="container">
         <form action="{{ route('product.admin.store') }}" method="post">
             @csrf
-            <h1 class="text-center m-md-5">Добавление товара</h1>
+            <h1 class="text-center">Добавление товара</h1>
             <div class="md-3">
                 <label for="Name-Category" class="form-label">Наименование</label>
                 <input name="name" id="Name-Category" type="text" value="{{ old("name") }}" class="form-control">

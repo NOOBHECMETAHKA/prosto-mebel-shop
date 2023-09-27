@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <h1 class="text-center">Категории</h1>
         <form method="get" action="{{ route('category.admin.index') }}">
            <div class="input-group mb-3 ">
                <input name="title" class="form-control" placeholder="" id="findButton" aria-label="Наименование категории" type="text">

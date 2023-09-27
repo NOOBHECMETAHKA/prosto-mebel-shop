@@ -5,35 +5,36 @@
     <div class="modal fade" id="sortModal" tabindex="-1" aria-labelledby="#sortModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Сортировка</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-5">
-                    <div class="alert alert-primary" role="alert">
-                        Сначала выбирите атрибут для сортировки после порядок.
+                <form action="{{ route('product.admin.index') }}" method="get">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Сортировка</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <hr>
-                    <p>Атрибут</p>
-                    <select class="form-select" size="3" aria-label="Size 3 select example">
-                        <option selected>Артикул</option>
-                        <option value="name">Наименование</option>
-                        <option value="description">Описание</option>
-                        <option value="price">Стоимость</option>
-                        <option value="discount">Скидка</option>
-                        <option value="category_id">Тип</option>
-                    </select>
-                    <hr>
-                    <p>Порядок</p>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">По убыванию?</label>
+                    <div class="modal-body p-5">
+                        <div class="alert alert-primary" role="alert">
+                            Сначала выбирите атрибут для сортировки после порядок.
+                        </div>
+                        <hr>
+                        <p>Атрибут</p>
+                        <select name="argument" class="form-select" size="3" aria-label="">
+                            <option value="id" selected>Артикул</option>
+                            <option value="name">Наименование</option>
+                            <option value="description">Описание</option>
+                            <option value="price">Стоимость</option>
+                            <option value="discount">Скидка</option>
+                        </select>
+                        <hr>
+                        <p>Порядок</p>
+                        <div class="mb-3 form-check">
+                            <input name="sortMode" id="checkModeSort" type="checkbox" class="form-check-input">
+                            <label class="form-check-label" for="checkModeSort">По убыванию?</label>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Поехали!</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Поехали!</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -42,7 +43,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Фильтрация</h1>
+                    <h1 class="modal-title fs-5">Фильтрация</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-5">
@@ -57,7 +58,7 @@
     </div>
 
     <div class="container d-flex flex-md-column align-items-center">
-        <h1 class="text-center m-md-5">Продукты</h1>
+        <h1 class="text-center">Продукты</h1>
         <table class="table">
             <thead>
             <th scope="col">Артикул</th>
