@@ -26,5 +26,12 @@ Route::group(["namespace" => 'Product', 'prefix' => 'admin', 'middleware' => 'ad
 
     Route::post("/add/product", [\App\Http\Controllers\Product\ProductController::class, "store"])->name("product.admin.store");
     Route::post('/products/{id}', [\App\Http\Controllers\Product\ProductController::class, "update"])->where(['id'=>'[0-9]+'])->name("product.admin.update");
-    Route::delete('/products/{id}', [\App\Http\Controllers\Product\ProductController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("product.admin.delete");
+    Route::post('/delete/products/{id}', [\App\Http\Controllers\Product\ProductController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("product.admin.delete");
+});
+
+Route::group(["namespace" => "Category", 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){
+    Route::get('/categories', [\App\Http\Controllers\Category\CategoryController::class, "index"])->name("category.admin.index");
+
+    Route::post("/add/category", [\App\Http\Controllers\Category\CategoryController::class, "store"])->name("category.admin.store");
+    Route::post('/delete/categories/{id}', [\App\Http\Controllers\Category\CategoryController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("category.admin.delete");
 });

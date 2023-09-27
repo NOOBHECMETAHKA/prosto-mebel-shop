@@ -52,17 +52,24 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a href="{{ route('product.admin.index') }}" class="nav-link">Продукты</a>
+                                <a href="{{ route('product.admin.index') }}" class="nav-link">
+                                    <img src="{{ asset('Bicons/layout-text-window.svg')}}"> : Продукты</a>
                             </li>
+                        <li class="nav-item">
+                            <a href="{{ route('category.admin.index') }}" class="nav-link">
+                                <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
+                                Категории
+                            </a>
+                        </li>
                             <li class="nav-item">
-                                <a class="nav-link border rounded" aria-haspopup="true" aria-expanded="false">
-                                    Пользователь: {{ Auth::user()->name }}
+                                <a class="nav-link" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('Bicons/emoji-smile.svg')}}"> : {{ Auth::user()->name }} </img>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button class="nav-link" type="submit">Выйти</button>
+                                    <button class="btn btn-outline-danger" type="submit">Выйти</button>
                                 </form>
                             </li>
                         @endguest
@@ -76,5 +83,6 @@
         </main>
     </div>
 <script src="{{ asset('js/bootstrap2.js') }}"></script>
+
 </body>
 </html>

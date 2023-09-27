@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductIndexRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -11,8 +12,19 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index(){
+    private function productSort($data){
         $products = Product::all();
+        if(isset($data['category_id']))
+            $products = $products->where('category_id', $data['category_id']);
+
+        return $products;
+    }
+    //Http work
+    public function index(ProductIndexRequest $request){
+        $data = $request->validated();
+
+        $products = $this->productSort($data);
+
         $categories = Category::all();
         return View('product.index', compact('products', 'categories'));
     }
@@ -59,6 +71,7 @@ class ProductController extends Controller
     }
 
     public function destroy($id){
-        DB::table("products")->where('id', $id)->delete();
+        DB::table(Product::$tableName)->where('id', $id)->delete();
+        return redirect()->route('product.admin.index');
     }
 }

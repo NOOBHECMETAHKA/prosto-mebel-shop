@@ -55,12 +55,14 @@
                         @else
                             @if(auth()->user()->role === 'admin')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('product.admin.index') }}">Настройки</a>
+                                    <a class="nav-link" href="{{ route('product.admin.index') }}">
+                                        <img src="{{ asset('Bicons/card-list.svg')}}"> : Настройки
+                                    </a>
                                 </li>
                             @endif
                             <li class="nav-item">
-                                <a class="nav-link border rounded" aria-haspopup="true" aria-expanded="false">
-                                    Пользователь: {{ Auth::user()->name }}
+                                <a class="nav-link" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('Bicons/emoji-smile.svg')}}"> : {{ Auth::user()->name }} </img>
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -6,11 +6,8 @@
             @csrf
             <h1 class="text-center m-md-5">Добавление товара</h1>
             <div class="md-3">
-                <label for="Name-product" class="form-label">Наименование</label>
-                <input name="name" id="Name-product" type="text" value="{{ old("name") }}" class="form-control">
-                @error("name")
-                <p class="text-danger">{{ $message }}</p>
-                @enderror
+                <label for="Name-Category" class="form-label">Наименование</label>
+                <input name="name" id="Name-Category" type="text" value="{{ old("name") }}" class="form-control">
             </div>
             <div class="md-3">
                 <label for="Description-product" class="form-label">Описание</label>
