@@ -9,6 +9,4 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded = false;
-    public static $tableName = 'products';
-
 }

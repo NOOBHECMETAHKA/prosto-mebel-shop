@@ -15,8 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $cate = Category::factory(10)->make();
-        //dd($cate);
+        $cate = Category::factory(30)->create();
         // \App\Models\User::factory(10)->create();
     }
 }
