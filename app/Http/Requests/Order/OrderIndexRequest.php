@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryIndexRequest extends FormRequest
+class OrderIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class CategoryIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'int',
-            'title' => 'string'
+            //
         ];
     }
 }

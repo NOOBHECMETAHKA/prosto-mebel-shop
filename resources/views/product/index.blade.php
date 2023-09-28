@@ -67,17 +67,22 @@
             <th scope="col">Полная стоимость</th>
             <th scope="col">Скидка</th>
             <th scope="col">Тип</th>
+            <th scope="col">Важность</th>
             <th scope="col" colspan="2">Функции</th>
             </thead>
             <tbody>
             @foreach($products as $product)
                 <tr>
                     <td>{{ $product->id }}</td>
+                    {{--Артикул--}}
                     <td>{{ $product->name}}</td>
+                    {{--Наименование--}}
                     <td>{{ mb_substr($product->description, 0, 3, 'UTF-8') }}...</td>
+                    {{--Описание--}}
                     <td>
                         <p>{{ round($product->price) }} RUB</p>
                     </td>
+                    {{--Цена--}}
                     <td>
                         @if($product->discount != 0)
                             ({{($product->price / 100) * $product->discount}} RUB) {{ round($product->discount) }}%
@@ -85,13 +90,17 @@
                             -
                         @endif
                     </td>
+                    {{--Скидка--}}
                     <td>
                         @foreach($categories as $category)
                             @if($category->id == $product->category_id)
-                                {{ $category->title }}
+                                {{ $category->name }}
                             @endif
                         @endforeach
                     </td>
+                    {{--Категория--}}
+                    <td>{{ $product->importance_rating}}</td>
+                    {{--Важность--}}
                     <td>
                         <a class="btn btn-outline-warning" href="{{ route('product.admin.show', ['id' => $product->id]) }}">Изменить</a>
                     </td>
@@ -104,11 +113,18 @@
             @endforeach
             </tbody>
         </table>
-        <div class="col">
-            <a class="btn btn-outline-success" href="{{ route('product.admin.add') }}">Добавить товар</a>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#sortModal">Сортировка</button>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтрация</button>
-        </div>
+        @if(count($products) != 0)
+            <div class="col">
+                <a class="btn btn-outline-success" href="{{ route('product.admin.add') }}">Добавить товар</a>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#sortModal">Сортировка</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтрация</button>
+            </div>
+        @else
+            <div class="col">
+                <h3 class="text-center">Товаров нету!</h3>
+                <a class="btn btn-outline-success" href="{{ route('product.admin.add') }}">Добавить товар</a>
+            </div>
+        @endif
     </div>
 
 @endsection

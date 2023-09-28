@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryIndexRequest;
+use App\Http\Requests\Category\CategoryIndexRequest;
 use App\Models\Category;
-use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 
@@ -16,8 +15,8 @@ class CategoryController extends Controller
 
         if(isset($data['id']))
             $categories = $categories->where('id', $data['id']);
-        if(isset($data['title']))
-            $categories = $categories->where('title', "{$data['title']}");
+        if(isset($data['name']))
+            $categories = $categories->where('name', "{$data['title']}");
 
         return $categories;
     }
@@ -37,7 +36,7 @@ class CategoryController extends Controller
     }
 
     public function store(){
-        $data = request()->validate(['title' => 'min:3|required|unique:categories']);
+        $data = request()->validate(['name' => 'min:3|required|unique:categories', 'description' => 'string']);
         Category::create($data);
         return redirect()->route('category.admin.index');
     }

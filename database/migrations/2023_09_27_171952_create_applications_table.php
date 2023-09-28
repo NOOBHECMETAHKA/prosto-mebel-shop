@@ -13,12 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->text('description');
+            $table->string('reason');
+            $table->text('text');
             $table->boolean('is_deleted')->default(0);
             $table->timestamps();
+
+            $table->bigInteger('user_application_id')->unsigned();
+            $table->foreign('user_application_id', 'user_application_fk')
+                ->on('users')->references('id')
+                ->onDelete('cascade');
         });
     }
 
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('applications');
     }
 };

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Cometa</title>
+    <title>Панель администратор</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -51,16 +51,42 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a href="{{ route('product.admin.index') }}" class="nav-link">
-                                    <img src="{{ asset('Bicons/layout-text-window.svg')}}"> : Продукты</a>
-                            </li>
-                        <li class="nav-item">
-                            <a href="{{ route('category.admin.index') }}" class="nav-link">
-                                <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
-                                Категории
-                            </a>
-                        </li>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-success-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Данные
+                                </button>
+                                <ul class="dropdown-menu p-2">
+                                    <li class="nav-item">
+                                        <a href="{{ route('product.admin.index') }}" class="nav-link">
+                                            <img src="{{ asset('Bicons/layout-text-window.svg')}}"> : Продукты</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('category.admin.index') }}" class="nav-link">
+                                            <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
+                                            Категории
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                            <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
+                                            Статусы
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                            <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
+                                            Заказы
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                            <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
+                                            Заявки
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <li class="nav-item">
                                 <a class="nav-link" aria-haspopup="true" aria-expanded="false">
                                     <img src="{{ asset('Bicons/emoji-smile.svg')}}"> : {{ Auth::user()->name }} </img>
@@ -83,6 +109,6 @@
         </main>
     </div>
 <script src="{{ asset('js/bootstrap2.js') }}"></script>
-
+<script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
 </body>
 </html>

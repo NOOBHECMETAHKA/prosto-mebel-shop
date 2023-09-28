@@ -20,7 +20,7 @@
                 <label for="Category-product" class="form-label">Категория</label>
                 <select name="category_id" id="Category-product" class="form-control">
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
                 @error("category_id")
@@ -38,6 +38,13 @@
                 <label for="Discount-product" class="form-label">Скидка</label>
                 <input name="discount" id="Discount-product" type="number" value="{{ old("discount") }}" class="form-control">
                 @error("discount")
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="md-3">
+                <label for="Importance_rating" class="form-label">Важность</label>
+                <input name="importance_rating" id="Importance_rating" type="number" min="0" max="5" value="{{ old("discount") }}" class="form-control">
+                @error("importance_rating")
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>

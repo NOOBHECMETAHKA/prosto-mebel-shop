@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductIndexRequest;
+use App\Http\Requests\Product\ProductIndexRequest;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
@@ -60,7 +59,8 @@ class ProductController extends Controller
                 'description' => 'string',
                 'price' => 'numeric|min:0',
                 'category_id' => 'numeric|min:0',
-                'discount' => 'numeric|min:0'
+                'discount' => 'numeric|min:0',
+                'importance_rating' => 'numeric|min:0'
             ]
         );
         DB::table("products")->where('id', $id)->update($data);
@@ -74,7 +74,8 @@ class ProductController extends Controller
                'description' => 'string',
                'price' => 'numeric|min:0',
                'category_id' => 'numeric|min:0',
-               'discount' => 'numeric|min:0'
+               'discount' => 'numeric|min:0',
+               'importance_rating' => 'numeric|min:0'
            ]
        );
        DB::table("products")->insert($data);
