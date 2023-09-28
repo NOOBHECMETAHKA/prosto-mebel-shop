@@ -7,6 +7,7 @@ use App\Http\Requests\Product\ProductIndexRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductController extends Controller
@@ -72,10 +73,13 @@ class ProductController extends Controller
                 'price' => 'numeric|min:0',
                 'category_id' => 'numeric|min:0',
                 'discount' => 'numeric|min:0',
-                'importance_rating' => 'numeric|min:0'
+                'importance_rating' => 'numeric|min:0',
+                'image' => ''
             ]
         );
-        DB::table("products")->where('id', $id)->update($data);
+
+        dd($data);
+        DB::table(Product::$tableName)->where('id', $id)->update($data);
         return redirect()->route('product.admin.index');
     }
 
@@ -87,9 +91,13 @@ class ProductController extends Controller
                'price' => 'numeric|min:0',
                'category_id' => 'numeric|min:0',
                'discount' => 'numeric|min:0',
-               'importance_rating' => 'numeric|min:0'
+               'importance_rating' => 'numeric|min:0',
+               'image' => ''
            ]
        );
+
+       $path = Storage::disk('public')->put('/images', $data['image']);
+       dd($path);
        DB::table("products")->insert($data);
        return redirect()->route('product.admin.index');
     }

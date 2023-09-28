@@ -23,7 +23,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Проект комета
+                    Просто мебель
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -67,7 +67,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="{{ route('status.admin.index') }}" class="nav-link">
                                             <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
                                             Статусы
                                         </a>
@@ -106,6 +106,7 @@
 
         <main class="py-4">
             @yield('content')
+{{--            Контент--}}
         </main>
     </div>
 <script src="{{ asset('js/bootstrap2.js') }}"></script>

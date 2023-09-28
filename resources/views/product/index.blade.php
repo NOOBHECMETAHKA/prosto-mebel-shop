@@ -19,9 +19,9 @@
                         <select name="argument" class="form-select" size="3" aria-label="">
                             <option value="id" selected>Артикул</option>
                             <option value="name">Наименование</option>
-                            <option value="description">Описание</option>
                             <option value="price">Стоимость</option>
                             <option value="discount">Скидка</option>
+                            <option value="importance_rating">Важность</option>
                         </select>
                         <hr>
                         <p>Порядок</p>
@@ -63,6 +63,7 @@
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
+                                <option value="" selected>Ничего</option>
                             </select>
                             @error("category_id")
                             <p class="text-danger">{{ $message }}</p>
@@ -89,15 +90,13 @@
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="p-3">
-                            <button type="submit" class="btn btn-outline-success">Фильтрация</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="submit" class="btn btn-primary">Поехали!</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Поехали!</button>
-                </div>
+
             </div>
         </div>
     </div>

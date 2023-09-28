@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryIndexRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isNull;
 
 
 class CategoryController extends Controller
@@ -39,17 +40,24 @@ class CategoryController extends Controller
         $data = request()->validate(
             [
                 'name' => 'min:3|required|unique:categories',
-                'description' => 'string'
+                'description' => ''
             ]);
         Category::create($data);
         return redirect()->route('category.admin.index');
     }
 
-    public function update(){
+    public function update($id){
         $data = request()->validate(
         [
                 'name' => 'min:3|required',
-                'description' => 'string'
+                'description' => ''
         ]);
+
+        if(isNull($data['description']))
+            $data['description'] = '';
+
+        DB::table(Category::$tableName)->where('id', $id)->update($data);
+
+        return redirect()->route('category.admin.index');
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('product.admin.store') }}" method="post">
+        <form action="{{ route('product.admin.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <h1 class="text-center">Добавление товара</h1>
             <div class="md-3">
@@ -43,10 +43,14 @@
             </div>
             <div class="md-3">
                 <label for="Importance_rating" class="form-label">Важность</label>
-                <input name="importance_rating" id="Importance_rating" type="number" min="0" max="5" value="{{ old("discount") }}" class="form-control">
+                <input name="importance_rating" id="Importance_rating" type="number" min="1" max="5" value="{{ old("discount") }}" class="form-control">
                 @error("importance_rating")
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
+            </div>
+            <div class="md-3">
+                <label for="imagesInput" class="form-label">Выберите изображения</label>
+                <input class="form-control" id="imagesInput" type="file" name="image" multiple>
             </div>
             <div class="d-flex justify-content-center p-5">
                 <button type="submit" class="btn btn-outline-success w-25 m-md-5">Добавить товар</button>
