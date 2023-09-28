@@ -11,7 +11,7 @@
             </div>
         </form>
         <div>
-            <form method="post" action="{{ route('') }}">
+            <form method="post" action="{{ route('status.admin.store') }}">
                 @csrf
                 <div class="input-group mb-3">
                     <input name="name" class="form-control" placeholder="Наименование" id="findButton"
@@ -54,7 +54,7 @@
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal"
                                         data-bs-target="#updateModal-{{$status->id}}">Изменить
                                 </button>
-                                <form action="{{ route('category.admin.update', ['id' => $status->id]) }}"
+                                <form action="{{ route('status.admin.update', ['id' => $status->id]) }}"
                                       method="post">
                                     @csrf
                                     <div class="modal fade" id="updateModal-{{$status->id}}" tabindex="-1"
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <form action="{{ route('category.admin.delete', ['id' => $status->id]) }}"
+                                <form action="{{ route('status.admin.delete', ['id' => $status->id]) }}"
                                       method="post">
                                     @csrf
                                     <button class="btn btn-outline-danger" type="submit" href="#">Удалить</button>

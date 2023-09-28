@@ -48,9 +48,11 @@
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="md-3">
-                <label for="imagesInput" class="form-label">Выберите изображения</label>
-                <input class="form-control" id="imagesInput" type="file" name="image" multiple>
+            <div class="__file-spawn">
+                <div class="md-3">
+                    <label for="imagesInput" class="form-label">Выберите изображения</label>
+                    <input class="form-control" id="imagesInput" type="file" name="image[]" accept="image/*" multiple>
+                </div>
             </div>
             <div class="d-flex justify-content-center p-5">
                 <button type="submit" class="btn btn-outline-success w-25 m-md-5">Добавить товар</button>

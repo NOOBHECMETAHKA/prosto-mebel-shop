@@ -32,6 +32,11 @@
                 @enderror
             </form>
         </div>
+        <div class="">
+            @if(count($categories) != 0)
+                {{ $categories->links() }}
+            @endif
+        </div>
         @if(count($categories) != 0)
             <div class="row justify-content-center">
                 @foreach($categories as $category)

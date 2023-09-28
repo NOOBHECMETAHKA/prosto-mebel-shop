@@ -117,7 +117,20 @@
             <tbody>
             @foreach($products as $product)
                 <tr>
-                    <td>{{ $product->id }}</td>
+                    <td><div class="dropdown">
+                            <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ $product->id }}
+                            </a>
+                            <div class="dropdown-menu p-2">
+                                <p><b>Описание:</b> {{$product->description}}</p>
+                                @foreach($images as $image)
+                                    @if($image->product_photo_id == $product->id)
+                                        <img class="w-25 border" src="{{ asset('storage\\'.$image->link) }}" alt="Продукт">
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </td>
                     {{--Артикул--}}
                     <td>{{ $product->name}}</td>
                     {{--Наименование--}}
@@ -164,10 +177,16 @@
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filterModal">Фильтрация</button>
             </div>
         @else
-            <div class="col">
-                <h3 class="text-center">Товаров нету!</h3>
-                <a class="btn btn-outline-success" href="{{ route('product.admin.add') }}">Добавить товар</a>
-            </div>
+            @if(count($categories) != 0)
+                <div class="col">
+                    <h3 class="text-center">Товаров нету!</h3>
+                    <a class="btn btn-outline-success" href="{{ route('product.admin.add') }}">Добавить товар</a>
+                </div>
+            @else
+                <div class="alert alert-warning justify-content-center" role="alert">
+                    <p class="p-0 m-0">Для добавления товаров перейдите во вкладку категория и добавте хотя бы 1 категорию.</p>
+                </div>
+            @endif
         @endif
     </div>
 
