@@ -25,7 +25,8 @@ class CategoryIndexRequest extends FormRequest
     {
         return [
             'id' => 'int',
-            'title' => 'string'
+            'name' => 'string',
+            'description' => 'string'
         ];
     }
 }

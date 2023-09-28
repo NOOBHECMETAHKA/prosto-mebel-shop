@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    private function productSort($data){
+
+    private function productSortFilter($data){
         $products = Product::all();
+
+
 
         //Сортировка
         if(isset($data["argument"])){
@@ -22,18 +25,27 @@ class ProductController extends Controller
                 $products = $products->sortBy($data['argument']);
         }
 
-        //Фильтрация с вкладки категории
-        if(isset($data['category_id']))
-            $products = $products->where('category_id', $data['category_id']);
+        //Фильтрация
+        $collection = ['id', 'name', 'price', 'discount', 'category_id', 'importance_rating'];
+
+        foreach($collection as $filterElement){
+            if(isset($data[$filterElement]))
+                $products = $products->where($filterElement, $data[$filterElement]);
+        }
+
+//        //Фильтрация с вкладки категории
+//        if(isset($data['category_id']))
+//            $products = $products->where('category_id', $data['category_id']);
 
         return $products;
     }
 
     //---------------------------------------Http work
+
     public function index(ProductIndexRequest $request){
         $data = $request->validated();
 
-        $products = $this->productSort($data);
+        $products = $this->productSortFilter($data);
 
         $categories = Category::all();
         return View('product.index', compact('products', 'categories'));

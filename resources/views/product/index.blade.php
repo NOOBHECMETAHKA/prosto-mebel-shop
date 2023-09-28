@@ -1,7 +1,7 @@
 @extends('layouts.adminApp')
 
 @section('content')
-    <!-- Modal -->
+{{--Сортировка--}}
     <div class="modal fade" id="sortModal" tabindex="-1" aria-labelledby="#sortModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-
+{{--Фильтрация--}}
     <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="#filterModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -47,7 +47,52 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-5">
-
+                    <form action="{{ route('product.admin.index') }}" method="get">
+                        @csrf
+                        <div class="md-3">
+                            <label for="ID" class="form-label">Артикул</label>
+                            <input name="id" id="ID" type="text" value="{{ old("name") }}" class="form-control">
+                        </div>
+                        <div class="md-3">
+                            <label for="Name-Category" class="form-label">Наименование</label>
+                            <input name="name" id="Name-Category" type="text" value="{{ old("name") }}" class="form-control">
+                        </div>
+                        <div class="md-3">
+                            <label for="Category-product" class="form-label">Категория</label>
+                            <select name="category_id" id="Category-product" class="form-control">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error("category_id")
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="md-3">
+                            <label for="Price-product" class="form-label">Цена</label>
+                            <input name="price" id="Price-product" type="number" value="{{ old("price") }}" class="form-control">
+                            @error("price")
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="md-3">
+                            <label for="Discount-product" class="form-label">Скидка</label>
+                            <input name="discount" id="Discount-product" type="number" value="{{ old("discount") }}" class="form-control">
+                            @error("discount")
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="md-3">
+                            <label for="Importance_rating" class="form-label">Важность</label>
+                            <input name="importance_rating" id="Importance_rating" type="number" min="0" max="5" value="{{ old("discount") }}" class="form-control">
+                            @error("importance_rating")
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="p-3">
+                            <button type="submit" class="btn btn-outline-success">Фильтрация</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>

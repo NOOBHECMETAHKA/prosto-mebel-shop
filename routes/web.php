@@ -34,4 +34,5 @@ Route::group(["namespace" => "Category", 'prefix' => 'admin', 'middleware' => 'a
 
     Route::post("/add/category", [\App\Http\Controllers\Category\CategoryController::class, "store"])->name("category.admin.store");
     Route::post('/delete/categories/{id}', [\App\Http\Controllers\Category\CategoryController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("category.admin.delete");
+    Route::post('/update/categories/{id}', [\App\Http\Controllers\Category\CategoryController::class, "update"])->where(['id'=>'[0-9]+'])->name("category.admin.update");
 });

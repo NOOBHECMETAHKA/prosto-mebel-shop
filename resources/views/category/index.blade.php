@@ -14,7 +14,7 @@
                 @csrf
                 <div class="input-group mb-3">
                     <input name="name" class="form-control" placeholder="Наименование" id="findButton" aria-label="Наименование категории" type="text" value="{{ old("name") }}"/>
-                    <textarea name="description" rows="1" class="form-control" placeholder="Описание категории" aria-label=""></textarea>
+                    <textarea name="description" rows="1" class="form-control" placeholder="Описание категории" aria-label="" required></textarea>
                     <button class="btn btn-outline-success" type="submit">Добавить</button>
                 </div>
                 @error('name')
@@ -47,9 +47,35 @@
                             @endforeach
                             <hr>
                             <div class="d-flex gap-2">
-                                <form action="" method="post">
+                                <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#updateModal-{{$category->id}}">Изменить</button>
+                                <form action="{{ route('category.admin.update', ['id' => $category->id]) }}" method="post">
                                     @csrf
-                                    <button class="btn btn-outline-warning" type="submit" href="#">Изменить</button>
+                                    <div class="modal fade" id="updateModal-{{$category->id}}" tabindex="-1" aria-labelledby="#updateModal-{{$category->id}}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Изменение категории</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal- p-1">
+                                                    <form action="" method="post">
+                                                        <div class="mb-3 form-check">
+                                                            <label class="form-check-label" for="name">Наименование</label>
+                                                            <input name="name" id="name" type="text" class="form-control" value="{{ $category->name }}">
+                                                        </div>
+                                                        <div class="mb-3 form-check">
+                                                            <label class="form-check-label" for="description">Описание</label>
+                                                            <input name="description" id="description" type="text" class="form-control" value="{{ $category->description }}">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <button type="button" class="btn btn-primary">Изменить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                                 <form action="{{ route('category.admin.delete', ['id' => $category->id]) }}" method="post">
                                     @csrf
@@ -62,7 +88,7 @@
             </div>
         @else
             <div class="alert alert-warning justify-content-center" role="alert">
-                <p class="p-0 m-0">Требуется добавить категорию! <b>Без категории нельзя создать товар!</b></p>
+                <p class="p-0 m-0">Пусто</p>
             </div>
         @endif
     </div>

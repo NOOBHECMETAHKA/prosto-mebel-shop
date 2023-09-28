@@ -19,14 +19,15 @@ class ProductIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'string',
-            'name' => 'string',
-            'description' => 'string',
-            'price' => 'string',
-            'discount' => 'string',
-            'argument' => 'string',
-            'sortMode' => 'string',
-            'category_id' => 'numeric|min:0'
+            'id' => '',
+            'name' => '',
+            'description' => '',
+            'price' => '',
+            'discount' => '',
+            'argument' => '',
+            'sortMode' => '',
+            'category_id' => '',
+            'importance_rating' => ''
         ];
     }
 }
