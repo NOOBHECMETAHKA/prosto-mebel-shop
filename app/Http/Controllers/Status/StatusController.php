@@ -34,7 +34,7 @@ class StatusController extends Controller
 
     public function destroy($id){
         DB::table(Status::$tableName)->where('id', $id)->delete();
-        return redirect()->route('statuses.admin.index');
+        return redirect()->route('status.admin.index');
     }
 
     public function store(){
@@ -44,7 +44,7 @@ class StatusController extends Controller
                 'description' => ''
             ]);
         Status::create($data);
-        return redirect()->route('statuses.admin.index');
+        return redirect()->route('status.admin.index');
     }
 
     public function update($id){
@@ -59,6 +59,6 @@ class StatusController extends Controller
 
         DB::table(Status::$tableName)->where('id', $id)->update($data);
 
-        return redirect()->route('statuses.admin.index');
+        return redirect()->route('status.admin.index');
     }
 }

@@ -33,7 +33,7 @@
             </form>
         </div>
         <div class="">
-            @if(count($categories) != 0)
+            @if(count($categories) != 0 and ($categories instanceof Illuminate\Pagination\LengthAwarePaginator))
                 {{ $categories->links() }}
             @endif
         </div>

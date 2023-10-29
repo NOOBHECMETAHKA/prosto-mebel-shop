@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\ImageManager;
 use App\Http\Requests\Product\ProductIndexRequest;
 use App\Models\Category;
+use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Nette\Utils\Image;
 
 
 class ProductController extends Controller
@@ -34,10 +37,6 @@ class ProductController extends Controller
                 $products = $products->where($filterElement, $data[$filterElement]);
         }
 
-//        //Фильтрация с вкладки категории
-//        if(isset($data['category_id']))
-//            $products = $products->where('category_id', $data['category_id']);
-
         return $products;
     }
 
@@ -49,7 +48,8 @@ class ProductController extends Controller
         $products = $this->productSortFilter($data);
 
         $categories = Category::all();
-        return View('product.index', compact('products', 'categories'));
+        $images = Photo::all();
+        return View('product.index', compact('products', 'categories', 'images'));
     }
 
     public function add(){
@@ -57,12 +57,15 @@ class ProductController extends Controller
         return View('product.add', compact('categories'));
     }
 
-    public function show($id){
+    public function edit($id){
         $prod = Product::all()->where("id", $id)->first();
         if($prod == null)
             return redirect()->route("product.admin.index");
         $categories = Category::all();
-        return View('product.update', compact('prod', 'categories'));
+
+        $photos = Photo::all();
+
+        return View('product.update', compact('prod', 'categories', 'photos'));
     }
 
     public function update($id){
@@ -77,8 +80,6 @@ class ProductController extends Controller
                 'image' => ''
             ]
         );
-
-        dd($data);
         DB::table(Product::$tableName)->where('id', $id)->update($data);
         return redirect()->route('product.admin.index');
     }
@@ -96,13 +97,37 @@ class ProductController extends Controller
            ]
        );
 
-       $path = Storage::disk('public')->put('/images', $data['image']);
-       dd($path);
-       DB::table("products")->insert($data);
+       //Функция принимает коллексицию данных подходящую для обработки и добавления
+        //Мы удаляем поле для объекта, чтобы он подходил для валидации
+        //После коллекцией файлов связываем файл с ключом в массив и эту структуру отправляем, с помощью Entity insert
+       $infoInject = $data['image'];
+       unset($data['image']);
+
+       $insertedID = DB::table(Product::$tableName)->insertGetId($data);
+
+       $photoObject = [];
+       foreach ($infoInject as $photo){
+           $path = ImageManager::save($photo);
+           $photoObject[] = ['product_photo_id' => $insertedID, 'link' => $path];
+       }
+
+       Photo::insert($photoObject);
+
        return redirect()->route('product.admin.index');
     }
 
     public function destroy($id){
+
+        dd($id);
+        $photos = Photo::all()->where("product_photo_id", $id);
+        $collection_ids_photos = [];
+
+        foreach ($photos as $photo){
+            $collection_ids_photos[] = $photo->id;
+        }
+
+        DB::table(Photo::$tableName)->delete($collection_ids_photos);
+
         DB::table(Product::$tableName)->where('id', $id)->delete();
         return redirect()->route('product.admin.index');
     }

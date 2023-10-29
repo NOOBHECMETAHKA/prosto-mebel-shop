@@ -14,18 +14,20 @@ class CategoryController extends Controller
     private function categoryFilter($data){
         $categories = Category::all();
 
+        if(isset($data['name'])){
+            $query = 'select * from `'.Category::$tableName.'` where `name` like \'%'.$data['name'].'%\';';
+            $categories = DB::select($query);
+        }
+
         if(isset($data['id']))
             $categories = $categories->where('id', $data['id']);
-        if(isset($data['name']))
-            $categories = $categories->where('name', 'LIKE', "%{$data['name']}%");
-
         return $categories;
     }
     //---------------------------------------Http work
     public function index(CategoryIndexRequest $request){
         $data = $request->validated();
 
-        $categories = $this->categoryFilter($data);
+        $categories = count($data) == 0 ? Category::paginate(9) : $this->categoryFilter($data);
 
         $usedCategories = DB::select('SELECT `categories`.`id`, COUNT(`products`.`id`) as `count` FROM `categories` inner join `products` on `categories`.`id` = `products`.`category_id` GROUP by `categories`.`id`');
         return View('category.index', compact('categories', 'usedCategories'));

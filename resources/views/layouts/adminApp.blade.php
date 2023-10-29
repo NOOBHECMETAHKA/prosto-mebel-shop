@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm ">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Просто мебель
@@ -111,5 +111,20 @@
     </div>
 <script src="{{ asset('js/bootstrap2.js') }}"></script>
 <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
+<script>
+    const fileInput = document.getElementById("imagesInput");
+    const textTip = document.getElementById("tipText");
+
+    fileInput.addEventListener("change", () => {
+       const maxFiles = 3;
+       const numFiles = fileInput.files.length;
+       if(numFiles > maxFiles){
+           fileInput.value = '';
+           textTip.style.visibility = 'visible'
+       } else {
+           textTip.style.visibility = 'hidden'
+       }
+    });
+</script>
 </body>
 </html>
