@@ -10,4 +10,8 @@ class Product extends Model
     use HasFactory;
     protected $guarded = false;
     public static $tableName = 'products';
+
+    public function getDiscount($product){
+        return ($product->price  / 100) * $product->discount;
+    }
 }

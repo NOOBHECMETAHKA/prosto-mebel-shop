@@ -19,6 +19,9 @@ Auth::routes();
 
 //Страница вёрствики
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/catalog/', [App\Http\Controllers\User\CatalogController::class, 'index'])->name('catalog');
+Route::get('/catalog/product/{id}', [App\Http\Controllers\User\CatalogController::class, 'show'])->where(['id'=>'[0-9]+'])->name('catalog.product.show');
+
 
 //Продукты
 Route::group(["namespace" => 'Product', 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){

@@ -16,9 +16,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 __header_back_links">
                     <li><a href="/" class="btn btn-light">Главная</a></li>
-                    @if(!Route::has('login'))
-                    <li><a href="#" class="btn btn-light">Мебель</a></li>
-                    @endif
+                    <li><a href="{{ route('catalog') }}" class="btn btn-light">Мебель</a></li>
                     <li><a href="#footer" class="btn btn-light">Контакты</a></li>
                 </ul>
                 <div class="text-end">
