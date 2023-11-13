@@ -26,13 +26,23 @@
                 <td class="">Цена:</td>
                 <td class="text-start">{{ $product->price.' рублей' }}</td>
             </tr>
-            <tr>
-                <td class="">Скидка:</td>
-                <td class="text-start">{{ $product->getDiscount($product).' рублей' }}</td>
-            </tr>
+            @if($product->discount != 0)
+                <tr>
+                    <td class="">Скидка:</td>
+                    <td class="text-start">{{ $product->getDiscount($product).' рублей' }}</td>
+                </tr>
+            @endif
             <tr>
                 <td class="">Категория:</td>
                 <td class="text-start">{{ $category->name }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <form action="{{ route('catalog.basket.add', ['id'=>$product->id]) }}" method="post">
+                        @csrf
+                        <button class="btn btn-success" type="submit">В корзину</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

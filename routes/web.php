@@ -21,6 +21,23 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/catalog/', [App\Http\Controllers\User\CatalogController::class, 'index'])->name('catalog');
 Route::get('/catalog/product/{id}', [App\Http\Controllers\User\CatalogController::class, 'show'])->where(['id'=>'[0-9]+'])->name('catalog.product.show');
+//Функционал корзины
+Route::get('/catalog/basket', [App\Http\Controllers\User\BasketController::class, 'index'])->name('catalog.basket.index');
+Route::post('/catalog/product/add/{id}', [App\Http\Controllers\User\BasketController::class, 'storeBasket'])->where(['id' => '[0-9]+'])->name('catalog.basket.add');
+Route::post('/catalog/product/delete/{id}', [App\Http\Controllers\User\BasketController::class, 'deleteBasket'])->where(['id' => '[0-9]+'])->name('catalog.basket.delete');
+Route::post('/catalog/product/clear/', [App\Http\Controllers\User\BasketController::class, 'clearBasket'])->name('catalog.basket.clear');
+//Профиль
+Route::get('/profile', [App\Http\Controllers\User\ProfileController::class, 'index'])->name('home.profile');
+Route::post('/profile/rename/me', [App\Http\Controllers\User\ProfileController::class, 'edit'])->name('home.profile.rename');
+//Адреса
+Route::get('/profile/address/add', [\App\Http\Controllers\User\AddressController::class, 'add'])->name('profile.address.add');
+Route::post('/profile/address/store', [\App\Http\Controllers\User\AddressController::class, 'store'])->name('profile.address.store');
+Route::post('/profile/address/delete/{id}', [\App\Http\Controllers\User\AddressController::class, 'delete'])->where(['id' => '[0-9]+'])->name('profile.address.delete');
+Route::get('profile/address/edit/{id}', [\App\Http\Controllers\User\AddressController::class, 'edit'])->where(['id' => '[0-9]+'])->name('profile.address.edit');
+Route::post('profile/address/update/{id}', [\App\Http\Controllers\User\AddressController::class, 'update'])->where(['id' => '[0-9]+'])->name('profile.address.update');
+
+//Оформление заказа
+//Route::post('catalog/basket/')
 
 
 //Продукты
@@ -50,5 +67,9 @@ Route::group(["namespace" => "Status", 'prefix' => 'admin', 'middleware' => 'adm
     Route::post("/add/status", [\App\Http\Controllers\Status\StatusController::class, "store"])->name("status.admin.store");
     Route::post('/delete/statuses/{id}', [\App\Http\Controllers\Status\StatusController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("status.admin.delete");
     Route::post('/update/statuses/{id}', [\App\Http\Controllers\Status\StatusController::class, "update"])->where(['id'=>'[0-9]+'])->name("status.admin.update");
+});
+
+Route::group(["namespace" => "Permission", 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){
+    Route::get('/users', [\App\Http\Controllers\Permission\PermissionController::class, 'index'])->name('users.permission.admin.index');
 });
 

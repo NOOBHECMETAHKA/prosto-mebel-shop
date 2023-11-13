@@ -71,22 +71,20 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal- p-1">
-                                                    <form action="" method="post">
-                                                        <div class="mb-3 form-check">
-                                                            <label class="form-check-label"
-                                                                   for="name">Наименование</label>
-                                                            <input name="name" id="name" type="text"
-                                                                   class="form-control" value="{{ $category->name }}">
-                                                        </div>
-                                                        <div class="mb-3 form-check">
-                                                            <label class="form-check-label"
-                                                                   for="description">Описание</label>
-                                                            <input name="description" id="description" type="text"
-                                                                   class="form-control"
-                                                                   value="{{ $category->description }}">
-                                                        </div>
-                                                    </form>
+                                                <div class="modal-body p-1">
+                                                    <div class="mb-3 form-check">
+                                                        <label class="form-check-label"
+                                                               for="name">Наименование</label>
+                                                        <input name="name" id="name" type="text"
+                                                               class="form-control" value="{{ $category->name }}">
+                                                    </div>
+                                                    <div class="mb-3 form-check">
+                                                        <label class="form-check-label"
+                                                               for="description">Описание</label>
+                                                        <input name="description" id="description" type="text"
+                                                               class="form-control"
+                                                               value="{{ $category->description }}">
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

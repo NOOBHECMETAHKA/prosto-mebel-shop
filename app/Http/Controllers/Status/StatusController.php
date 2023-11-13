@@ -9,6 +9,7 @@ use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Mailer\Transport\Smtp\Auth\AuthenticatorInterface;
+use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 class StatusController extends Controller
@@ -16,10 +17,10 @@ class StatusController extends Controller
     private function statusFilter($data){
         $status = Status::all();
 
-        if(isset($data['id']))
-            $status = $status->where('id', $data['id']);
-        if(isset($data['name']))
-            $status = $status->where('name', 'LIKE', "%{$data['name']}%");
+        if(isset($data['name'])){
+            $query = 'select * from `'.Status::$tableName.'` where `name` like \'%'.$data['name'].'%\';';
+            $status = DB::select($query);
+        }
 
         return $status;
     }
@@ -33,19 +34,19 @@ class StatusController extends Controller
     }
 
     public function destroy($id){
-        DB::table(Status::$tableName)->where('id', $id)->delete();
+        Status::logicDelete($id);
         return redirect()->route('status.admin.index');
     }
 
-    public function store(){
-        $data = request()->validate(
-            [
-                'name' => 'min:3|required|unique:categories',
-                'description' => ''
-            ]);
-        Status::create($data);
-        return redirect()->route('status.admin.index');
-    }
+//    public function store(){
+//        $data = request()->validate(
+//            [
+//                'name' => 'min:3|required|unique:categories',
+//                'description' => ''
+//            ]);
+//        Status::create($data);
+//        return redirect()->route('status.admin.index');
+//    }
 
     public function update($id){
         $data = request()->validate(
@@ -54,8 +55,9 @@ class StatusController extends Controller
                 'description' => ''
             ]);
 
-        if(isNull($data['description']))
-            $data['description'] = '';
+        if($data['description'] == ''){
+            $data['description'] = 'Описание отсуствует';
+        }
 
         DB::table(Status::$tableName)->where('id', $id)->update($data);
 

@@ -14,6 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("css/bootstrap2.css") }}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}"/>
+
     <style>
 
     </style>
@@ -82,6 +83,12 @@
                                         <a href="" class="nav-link">
                                             <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
                                             Заявки
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.permission.admin.index') }}" class="nav-link">
+                                            <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
+                                            Роли
                                         </a>
                                     </li>
                                 </ul>

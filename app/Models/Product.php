@@ -11,7 +11,8 @@ class Product extends Model
     protected $guarded = false;
     public static $tableName = 'products';
 
-    public function getDiscount($product){
+    public static function getDiscount($product): float|int
+    {
         return ($product->price  / 100) * $product->discount;
     }
 }

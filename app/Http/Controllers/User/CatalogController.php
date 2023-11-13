@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Basket;
 use App\Models\Category;
-use App\Models\OrderList;
 use App\Models\Photo;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class CatalogController extends Controller
 {
@@ -17,7 +16,13 @@ class CatalogController extends Controller
         $categories = Category::all();
         $photos = Photo::all();
 
-        return View('storeSystem.catalog', compact('products', 'categories', 'photos'));
+        //Проверка
+        $basketCount = null;
+        if(!is_null(Auth::user())){
+            $basketCount = Basket::countProductsInBasketUser(Auth::user()->getAuthIdentifier());
+        }
+
+        return View('storeSystem.catalog', compact('products', 'categories', 'photos', 'basketCount'));
     }
 
     public function show($id){
@@ -30,6 +35,13 @@ class CatalogController extends Controller
 
         $category = Category::all()->where('id', $product->category_id)->first();
 
-        return View('storeSystem.aboutProduct', compact('product', 'category', 'photos'));
+        //Проверка
+        $basketCount = null;
+        if(!is_null(Auth::user())){
+            $basketCount = Basket::countProductsInBasketUser(Auth::user()->getAuthIdentifier());
+        }
+
+        return View('storeSystem.aboutProduct', compact('product', 'category', 'photos', 'basketCount'));
     }
+
 }

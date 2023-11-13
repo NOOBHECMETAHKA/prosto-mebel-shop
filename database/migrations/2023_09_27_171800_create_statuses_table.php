@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
+            $table->string('key_value', 75);
             $table->string('name')->unique();
             $table->text('description');
             $table->boolean('is_deleted')->default(0);

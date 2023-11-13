@@ -10,45 +10,41 @@
                 <button class="btn btn-outline-primary" type="submit">Найти</button>
             </div>
         </form>
-        <div>
-            <form method="post" action="{{ route('status.admin.store') }}">
-                @csrf
-                <div class="input-group mb-3">
-                    <input name="name" class="form-control" placeholder="Наименование" id="findButton"
-                           aria-label="Наименование категории" type="text" value="{{ old("name") }}"/>
-                    <textarea name="description" rows="1" class="form-control" placeholder="Описание категории"
-                              aria-label="" required></textarea>
-                    <button class="btn btn-outline-success" type="submit">Добавить</button>
-                </div>
-                @error('name')
-                <div class="alert alert-danger" role="alert">
-                    {{ $message }}
-                </div>
-                @enderror
-                @error('description')
-                <div class="alert alert-danger" role="alert">
-                    {{ $message }}
-                </div>
-                @enderror
-            </form>
-        </div>
+{{--        <div>--}}
+{{--            Добавление статуса--}}
+{{--            <form method="post" action="{{ route('status.admin.store') }}">--}}
+{{--                @csrf--}}
+{{--                <div class="input-group mb-3">--}}
+{{--                    <input name="name" class="form-control" placeholder="Наименование" id="findButton"--}}
+{{--                           aria-label="Наименование категории" type="text" value="{{ old("name") }}"/>--}}
+{{--                    <textarea name="description" rows="1" class="form-control" placeholder="Описание категории"--}}
+{{--                              aria-label="" required></textarea>--}}
+{{--                    <button class="btn btn-outline-success" type="submit">Добавить</button>--}}
+{{--                </div>--}}
+{{--                @error('name')--}}
+{{--                <div class="alert alert-danger" role="alert">--}}
+{{--                    {{ $message }}--}}
+{{--                </div>--}}
+{{--                @enderror--}}
+{{--                @error('description')--}}
+{{--                <div class="alert alert-danger" role="alert">--}}
+{{--                    {{ $message }}--}}
+{{--                </div>--}}
+{{--                @enderror--}}
+{{--            </form>--}}
+{{--        </div>--}}
         @if(count($statuses) != 0)
-            <div class="row justify-content-center">
+            <div class="row justify-content-center flex-wrap">
                 @foreach($statuses as $status)
                     <div class="card p-3 col-md-4 m-1 w-25 justify-content-center">
                         <div class="card-body">
-                            <h5 class="card-title">{{$status->name}}</h5>
-{{--                            @foreach($usedCategories as $key)--}}
-{{--                                @if($category->id == $key->id)--}}
-{{--                                    <hr>--}}
-{{--                                    <p class="card-text">Количество заказов: {{ $key->count }}</p>--}}
-{{--                                    <form action="{{ route('product.admin.index') }}" method="get">--}}
-{{--                                        <input name="category_id" class="visually-hidden" type="text"--}}
-{{--                                               value="{{ $category->id }}" aria-label="">--}}
-{{--                                        <button type="submit" class="btn btn-outline-primary">Посмотреть</button>--}}
-{{--                                    </form>--}}
-{{--                                @endif--}}
-{{--                            @endforeach--}}
+                            <h5 class="card-title
+                            @if($status->is_deleted == 1)
+                            text-decoration-line-through
+                            @endif"
+                            >{{$status->name}}</h5>
+                            <hr>
+                            <p>{{$status->description}}</p>
                             <hr>
                             <div class="d-flex gap-2">
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal"
@@ -66,22 +62,20 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal- p-1">
-                                                    <form action="" method="post">
-                                                        <div class="mb-3 form-check">
-                                                            <label class="form-check-label"
-                                                                   for="name">Наименование</label>
-                                                            <input name="name" id="name" type="text"
-                                                                   class="form-control" value="{{ $status->name }}">
-                                                        </div>
-                                                        <div class="mb-3 form-check">
-                                                            <label class="form-check-label"
-                                                                   for="description">Описание</label>
-                                                            <input name="description" id="description" type="text"
-                                                                   class="form-control"
-                                                                   value="{{ $status->description }}">
-                                                        </div>
-                                                    </form>
+                                                <div class="modal-body">
+                                                    <div class="mb-3 form-check">
+                                                        <label class="form-check-label"
+                                                               for="name">Наименование</label>
+                                                        <input name="name" id="name" type="text"
+                                                               class="form-control" value="{{ $status->name }}">
+                                                    </div>
+                                                    <div class="mb-3 form-check">
+                                                        <label class="form-check-label"
+                                                               for="description">Описание</label>
+                                                        <input name="description" id="description" type="text"
+                                                               class="form-control"
+                                                               value="{{ $status->description }}">
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -96,7 +90,11 @@
                                 <form action="{{ route('status.admin.delete', ['id' => $status->id]) }}"
                                       method="post">
                                     @csrf
-                                    <button class="btn btn-outline-danger" type="submit" href="#">Удалить</button>
+                                    @if($status->is_deleted == 0)
+                                        <button class="btn btn-outline-danger" type="submit">Не использовать</button>
+                                    @else
+                                        <button class="btn btn-outline-success" type="submit">Использовать</button>
+                                    @endif
                                 </form>
                             </div>
                         </div>
