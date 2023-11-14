@@ -12,12 +12,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- styles -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap2.css") }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css')}}"/>
-
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/admin_style.css')}}"/>
 </head>
 <body>
     <div id="app">
@@ -89,6 +87,12 @@
                                         <a href="{{ route('users.permission.admin.index') }}" class="nav-link">
                                             <img src="{{ asset('Bicons/layout-text-window.svg')}}"> :
                                             Роли
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.logs.admin.index') }}" class="nav-link">
+                                            <img src="{{ asset('Bicons/code.svg')}}"> :
+                                            Консоль
                                         </a>
                                     </li>
                                 </ul>

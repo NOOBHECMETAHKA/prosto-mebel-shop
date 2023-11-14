@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class PermissionController extends Controller{
 
     public function index(UserIndexRequest $request){
-        $users = User::all()->filter(function($user){ return $user->id != Auth::user()->getAuthIdentifier(); });
+        $users = User::all()->filter(function($user){
+            return ($user->id != Auth::user()->getAuthIdentifier()) and ($user->role != 'user');
+        });
         $roles = User::$roles;
         return View('permission.index', compact('users', 'roles'));
     }

@@ -35,11 +35,8 @@ Route::post('/profile/address/store', [\App\Http\Controllers\User\AddressControl
 Route::post('/profile/address/delete/{id}', [\App\Http\Controllers\User\AddressController::class, 'delete'])->where(['id' => '[0-9]+'])->name('profile.address.delete');
 Route::get('profile/address/edit/{id}', [\App\Http\Controllers\User\AddressController::class, 'edit'])->where(['id' => '[0-9]+'])->name('profile.address.edit');
 Route::post('profile/address/update/{id}', [\App\Http\Controllers\User\AddressController::class, 'update'])->where(['id' => '[0-9]+'])->name('profile.address.update');
-
 //Оформление заказа
 //Route::post('catalog/basket/')
-
-
 //Продукты
 Route::group(["namespace" => 'Product', 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){
     Route::get('/products', [\App\Http\Controllers\Product\ProductController::class, "index"])->name("product.admin.index");
@@ -48,9 +45,8 @@ Route::group(["namespace" => 'Product', 'prefix' => 'admin', 'middleware' => 'ad
 
     Route::post("/add/product", [\App\Http\Controllers\Product\ProductController::class, "store"])->name("product.admin.store");
     Route::post('/products/{id}', [\App\Http\Controllers\Product\ProductController::class, "update"])->where(['id'=>'[0-9]+'])->name("product.admin.update");
-    Route::post('/delete/products/{id}', [\App\Http\Controllers\Product\ProductController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("product.admin.delete");
+    Route::post('/delete/products/{id}', [\App\Http\Controllers\Product\ProductController::class, "delete"])->where(['id'=>'[0-9]+'])->name("product.admin.delete");
 });
-
 //Категории
 Route::group(["namespace" => "Category", 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){
     Route::get('/categories', [\App\Http\Controllers\Category\CategoryController::class, "index"])->name("category.admin.index");
@@ -59,7 +55,6 @@ Route::group(["namespace" => "Category", 'prefix' => 'admin', 'middleware' => 'a
     Route::post('/delete/categories/{id}', [\App\Http\Controllers\Category\CategoryController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("category.admin.delete");
     Route::post('/update/categories/{id}', [\App\Http\Controllers\Category\CategoryController::class, "update"])->where(['id'=>'[0-9]+'])->name("category.admin.update");
 });
-
 //Статусы
 Route::group(["namespace" => "Status", 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){
     Route::get('/statuses', [\App\Http\Controllers\Status\StatusController::class, "index"])->name("status.admin.index");
@@ -68,8 +63,13 @@ Route::group(["namespace" => "Status", 'prefix' => 'admin', 'middleware' => 'adm
     Route::post('/delete/statuses/{id}', [\App\Http\Controllers\Status\StatusController::class, "destroy"])->where(['id'=>'[0-9]+'])->name("status.admin.delete");
     Route::post('/update/statuses/{id}', [\App\Http\Controllers\Status\StatusController::class, "update"])->where(['id'=>'[0-9]+'])->name("status.admin.update");
 });
-
+//Роли
 Route::group(["namespace" => "Permission", 'prefix' => 'admin', 'middleware' => 'admin'], function ($id){
     Route::get('/users', [\App\Http\Controllers\Permission\PermissionController::class, 'index'])->name('users.permission.admin.index');
+});
+//Консоль логов
+Route::group(["namespace" => "Permission", 'prefix' => 'admin', 'middleware' => 'admin'], function (){
+    Route::get('/logs', [\App\Http\Controllers\Logging\LoggingActionUsersController::class, 'index'])->name('users.logs.admin.index');
+    Route::post('/logs/clear', [\App\Http\Controllers\Logging\LoggingActionUsersController::class, 'delete'])->name('users.logs.admin.clear');
 });
 

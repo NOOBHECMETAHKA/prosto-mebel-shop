@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\ImageManager;
+use App\Http\RedisLogging;
 use App\Http\Requests\Product\ProductIndexRequest;
 use App\Models\Category;
 use App\Models\Photo;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Nette\Utils\Image;
@@ -49,11 +51,15 @@ class ProductController extends Controller
 
         $categories = Category::all();
         $images = Photo::all();
+
+
+
         return View('product.index', compact('products', 'categories', 'images'));
     }
 
     public function add(){
         $categories = Category::all();
+        RedisLogging::saveLog("Добавление", "Продуктов", Auth::user()->getAuthIdentifier());
         return View('product.add', compact('categories'));
     }
 
@@ -80,7 +86,10 @@ class ProductController extends Controller
                 'image' => ''
             ]
         );
+
         DB::table(Product::$tableName)->where('id', $id)->update($data);
+        RedisLogging::saveLog("Изменение", "Продуктов", Auth::user()->getAuthIdentifier());
+
         return redirect()->route('product.admin.index');
     }
 
@@ -112,11 +121,12 @@ class ProductController extends Controller
        }
 
        Photo::insert($photoObject);
+       RedisLogging::saveLog("Добавление", "Продуктов", Auth::user()->getAuthIdentifier());
 
        return redirect()->route('product.admin.index');
     }
 
-    public function destroy($id){
+    public function delete($id){
 
         dd($id);
         $photos = Photo::all()->where("product_photo_id", $id);
@@ -129,6 +139,9 @@ class ProductController extends Controller
         DB::table(Photo::$tableName)->delete($collection_ids_photos);
 
         DB::table(Product::$tableName)->where('id', $id)->delete();
+
+        RedisLogging::saveLog("Удаление", "Продуктов", Auth::user()->getAuthIdentifier());
+
         return redirect()->route('product.admin.index');
     }
 }

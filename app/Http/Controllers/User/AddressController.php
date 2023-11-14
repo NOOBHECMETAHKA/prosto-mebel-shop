@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\RedisLogging;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class AddressController extends Controller
         $data['user_addresses_id'] = Auth::user()->getAuthIdentifier();
 
         Address::create($data);
+        RedisLogging::saveLog("Добавление", "Адреса", Auth::user()->getAuthIdentifier());
         return redirect()->route('home.profile');
     }
 
@@ -40,6 +42,7 @@ class AddressController extends Controller
             'Apartment' => 'required',
         ]);
         DB::table(Address::$tableName)->where('id', $id)->update($data);
+        RedisLogging::saveLog("Изменение", "Адреса", Auth::user()->getAuthIdentifier());
         return redirect()->route('home.profile');
     }
 
@@ -50,6 +53,7 @@ class AddressController extends Controller
 
     public function delete($id){
         DB::table(Address::$tableName)->where('id', $id)->delete();
+        RedisLogging::saveLog("Удаление", "Адреса", Auth::user()->getAuthIdentifier());
         return redirect()->route('home.profile');
     }
 }

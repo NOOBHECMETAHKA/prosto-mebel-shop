@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\RedisLogging;
 use App\Http\Requests\Category\CategoryIndexRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function PHPUnit\Framework\isNull;
 
@@ -35,6 +37,7 @@ class CategoryController extends Controller
 
     public function destroy($id){
         DB::table(Category::$tableName)->where('id', $id)->delete();
+        RedisLogging::saveLog("Удаление", "Категории", Auth::user()->getAuthIdentifier());
         return redirect()->route('category.admin.index');
     }
 
@@ -45,6 +48,7 @@ class CategoryController extends Controller
                 'description' => ''
             ]);
         Category::create($data);
+        RedisLogging::saveLog("Добавление", "Категори", Auth::user()->getAuthIdentifier());
         return redirect()->route('category.admin.index');
     }
 
@@ -59,7 +63,7 @@ class CategoryController extends Controller
             $data['description'] = '';
 
         DB::table(Category::$tableName)->where('id', $id)->update($data);
-
+        RedisLogging::saveLog("Изменение", "Категории", Auth::user()->getAuthIdentifier());
         return redirect()->route('category.admin.index');
     }
 }

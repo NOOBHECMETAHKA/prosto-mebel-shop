@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\RedisLogging;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -46,13 +47,10 @@ class Status extends Model
     public static function logicDelete($id)
     {
         $data = Status::all()->where('id', $id)->first();
-        if ($data != null) {
-            $value = $data->is_deleted == 0 ? 1 : 0;
-            $delete_status = ['is_deleted' => $value];
-            DB::table(Status::$tableName)->where('id', $id)->update($delete_status);
-            return true;
-        }
-        return false;
+        $value = $data->is_deleted == 0 ? 1 : 0;
+        $delete_status = ['is_deleted' => $value];
+        DB::table(Status::$tableName)->where('id', $id)->update($delete_status);
+        return $value;
     }
 
     public static function getNNStatus()

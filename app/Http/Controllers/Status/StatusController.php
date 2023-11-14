@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Status;
 
 use App\Http\Controllers\Controller;
+use App\Http\RedisLogging;
 use App\Http\Requests\Category\CategoryIndexRequest;
 use App\Models\Category;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Mailer\Transport\Smtp\Auth\AuthenticatorInterface;
 use function PHPUnit\Framework\isEmpty;
@@ -34,19 +36,10 @@ class StatusController extends Controller
     }
 
     public function destroy($id){
-        Status::logicDelete($id);
+        RedisLogging::saveLog(Status::logicDelete($id) ? "Блокировка" : "Восстановление",
+            "Статусы", Auth::user()->getAuthIdentifier());
         return redirect()->route('status.admin.index');
     }
-
-//    public function store(){
-//        $data = request()->validate(
-//            [
-//                'name' => 'min:3|required|unique:categories',
-//                'description' => ''
-//            ]);
-//        Status::create($data);
-//        return redirect()->route('status.admin.index');
-//    }
 
     public function update($id){
         $data = request()->validate(
@@ -60,7 +53,7 @@ class StatusController extends Controller
         }
 
         DB::table(Status::$tableName)->where('id', $id)->update($data);
-
+        RedisLogging::saveLog("Изменение", "Статусы", Auth::user()->getAuthIdentifier());
         return redirect()->route('status.admin.index');
     }
 }
